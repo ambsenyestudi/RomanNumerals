@@ -23,15 +23,22 @@ namespace RomanNumerals.Domain
         public static int ToArabic(RomanToken[] tokenSequence)
         {
             var result = 0;
-            for (int i = 0; i < tokenSequence.Length; i++)
+            var count = 0;
+            while(count < tokenSequence.Length)
             {
-                int arabic = tokenSequence[i].Arabic;
-                if(!IsLast(i, tokenSequence.Length) && TrySubstractArabic(tokenSequence[i], tokenSequence[i+1], out arabic))
+                if(IsLast(count, tokenSequence.Length))
                 {
-                    i++;
-                    result += tokenSequence[i].Arabic;
+                    result += tokenSequence[count].Arabic;
                 }
-                result += arabic;
+                else if(TrySubstractArabic(tokenSequence[count], tokenSequence[count+1], out int arabic))
+                {
+                    result += arabic;
+                }
+                else
+                {
+                    result += tokenSequence[count].Arabic;
+                }
+                count++;
             }
             return result;
         }

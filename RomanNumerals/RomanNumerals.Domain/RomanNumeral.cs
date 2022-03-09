@@ -4,6 +4,7 @@ namespace RomanNumerals.Domain
 {
     public class RomanNumeral
     {
+        const string UNIT_TOKEN = "I";
         private int arabicValue;
 
         public RomanNumeral(int arabicValue)
@@ -12,14 +13,12 @@ namespace RomanNumerals.Domain
         }
         public override string ToString()
         {
-            if (arabicValue == 1)
-            { 
-                return "I"; 
-            }
-            else
+            var result = string.Empty;
+            for (int i = 0; i < arabicValue; i++)
             {
-                return "II";
+                result += UNIT_TOKEN;
             }
+            return result;
         }
     }
 }

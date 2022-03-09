@@ -9,6 +9,8 @@ namespace RomanNumerals.Test
         [Theory]
         [InlineData(1,"I")]
         [InlineData(2, "II")]
+        [InlineData(3, "III")]
+        [InlineData(4, "IIII")]
         public void HaveUnits(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);

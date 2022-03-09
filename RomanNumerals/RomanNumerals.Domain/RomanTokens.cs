@@ -16,34 +16,35 @@ namespace RomanNumerals.Domain
                 RomanToken.I 
             };
         }
-        public List<RomanToken> ToRomanTokenList(int arabic)
+        
+        public RomanTokenSequence ToRomanTokenSequence(int arabic)
         {
-            return FigureRomanTokens(arabic);
+            return FigureRomanTokenSequence(arabic);
         }
-        private List<RomanToken> FigureRomanTokens(int arabic)
+        
+        private RomanTokenSequence FigureRomanTokenSequence(int arabic)
         {
-            var result = new List<RomanToken>();
-
+            var resultingSequence = new RomanTokenSequence();
             var evaluationgArabic = arabic;
             while (evaluationgArabic > 0)
             {
-                var romanTokenSequence = FigureTokenSequence(evaluationgArabic);
-                result.AddRange(romanTokenSequence);
-                evaluationgArabic -= RomanToken.ToArabic(romanTokenSequence);
+                var currentSequence = FigureTokenSequence(evaluationgArabic);
+                resultingSequence = resultingSequence.Add(currentSequence);
+                evaluationgArabic -= currentSequence.ToArabic();
             }
-            return result;
+            return resultingSequence;
         }
 
-        private RomanToken[] FigureTokenSequence(int evaluatingArabic)
+        private RomanTokenSequence FigureTokenSequence(int evaluatingArabic)
         {
 
             var unitPrependableToken = tokenList.FirstOrDefault(x => x.CanPrependUnit(evaluatingArabic));
             if (unitPrependableToken != null)
             {
-                return new RomanToken[] { RomanToken.I, unitPrependableToken };
+                return new RomanTokenSequence(RomanToken.I, unitPrependableToken );
             }
             var romanToken = tokenList.First(x => x.Arabic <= evaluatingArabic);
-            return new RomanToken[] { romanToken };
+            return new RomanTokenSequence(romanToken);
         }
 
     }

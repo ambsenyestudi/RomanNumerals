@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace RomanNumerals.Domain
 {
     public class RomanNumeral
     {
-        private List<RomanToken> romanTokenList = new List<RomanToken>();
+        private readonly RomanTokenSequence sequence;
 
         public int Arabic { get; }
 
         public RomanNumeral(int arabic)
         {
             var romanTokens = new RomanTokens();
-            romanTokenList = romanTokens.ToRomanTokenList(arabic);
+            sequence = romanTokens.ToRomanTokenSequence(arabic);
             Arabic = arabic;
         }
-        public override string ToString()
-        {
-            var romantTokenValues = romanTokenList.Select(x => x.ToString());
-            return string.Join("", romantTokenValues);
-        }        
+        public override string ToString() =>
+            sequence.ToString();
     }
 }

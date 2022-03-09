@@ -42,11 +42,17 @@ namespace RomanNumerals.Domain
             var evaluationgArabic = arabicValue;
             while(evaluationgArabic > 0)
             {
-                var arabicNumeral = romanTokensDictionary.Keys.First(x=>x<=evaluationgArabic);
-                result += romanTokensDictionary[arabicNumeral];
+                var (arabicNumeral, romanToken) = FigureToken(evaluationgArabic);
+                result += romanToken;
                 evaluationgArabic -= arabicNumeral;
             }
             return result;
+        }
+
+        private (int, string) FigureToken(int evaluationgArabic)
+        {
+            var arabicNumeral = romanTokensDictionary.Keys.First(x => x <= evaluationgArabic);
+            return (arabicNumeral, romanTokensDictionary[arabicNumeral]);
         }
     }
 }

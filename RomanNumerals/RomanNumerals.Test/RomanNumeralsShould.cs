@@ -10,7 +10,6 @@ namespace RomanNumerals.Test
         [InlineData(1,"I")]
         [InlineData(2, "II")]
         [InlineData(3, "III")]
-        [InlineData(4, "IIII")]
         public void Have_Units_When_Under_Four(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);
@@ -22,7 +21,6 @@ namespace RomanNumerals.Test
         [InlineData(6, "VI")]
         [InlineData(7, "VII")]
         [InlineData(8, "VIII")]
-        [InlineData(9, "VIIII")]
         public void Have_Five_Then_Under_Nine(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);
@@ -31,7 +29,7 @@ namespace RomanNumerals.Test
 
         [Theory]
         [InlineData(4, "IV")]
-        [InlineData(2, "IX")]
+        [InlineData(9, "IX")]
         public void Have_Prepended_Unit_When__Four_Or_Nine(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);

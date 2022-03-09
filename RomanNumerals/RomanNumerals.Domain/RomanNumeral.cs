@@ -14,7 +14,16 @@ namespace RomanNumerals.Domain
         }
         public override string ToString()
         {
+            if(arabicValue == 4)
+            {
+                return "IV";
+            }
+            if(arabicValue == 9)
+            {
+                return "IX";
+            }
             var result = string.Empty;
+            
             var evaluationgArabic = arabicValue;
             if (evaluationgArabic >= 5)
             {

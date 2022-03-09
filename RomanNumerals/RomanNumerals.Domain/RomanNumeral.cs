@@ -1,39 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanNumerals.Domain
 {
     public class RomanNumeral
     {
-        const string UNIT_TOKEN = "I";
-        const string FIVE_TOKEN = "V";
+        private Dictionary<int, string> romanTokensDictionary = new Dictionary<int, string>
+        {
+            [10] = "X",
+            [5] = "V",
+            [1] = "I"
+        };
         private int arabicValue;
 
         public RomanNumeral(int arabicValue)
         {
             this.arabicValue = arabicValue;
         }
-        public override string ToString()
+        public override string ToString() => 
+            FigureRomanTokens();
+
+        private string FigureRomanTokens()
         {
-            if(arabicValue == 4)
+            if (arabicValue == 4)
             {
                 return "IV";
             }
-            if(arabicValue == 9)
+            if (arabicValue == 9)
             {
                 return "IX";
             }
+            
+            return FigureBiggerPrepended();
+        }
+
+        private string FigureBiggerPrepended()
+        {
             var result = string.Empty;
             
             var evaluationgArabic = arabicValue;
-            if (evaluationgArabic >= 5)
+            while(evaluationgArabic > 0)
             {
-                result = FIVE_TOKEN;
-                evaluationgArabic -= 5;
-            }
-            
-            for (int i = 0; i < evaluationgArabic; i++)
-            {
-                result += UNIT_TOKEN;
+                var arabicNumeral = romanTokensDictionary.Keys.First(x=>x<=evaluationgArabic);
+                result += romanTokensDictionary[arabicNumeral];
+                evaluationgArabic -= arabicNumeral;
             }
             return result;
         }

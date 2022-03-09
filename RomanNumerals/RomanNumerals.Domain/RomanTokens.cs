@@ -27,24 +27,23 @@ namespace RomanNumerals.Domain
             var evaluationgArabic = arabic;
             while (evaluationgArabic > 0)
             {
-                var (arabicNumeral, romanTokens) = FigureToken(evaluationgArabic);
-                result.AddRange(romanTokens);
-                evaluationgArabic -= arabicNumeral;
+                var romanTokenSequence = FigureTokenSequence(evaluationgArabic);
+                result.AddRange(romanTokenSequence);
+                evaluationgArabic -= RomanToken.ToArabic(romanTokenSequence);
             }
             return result;
         }
 
-        private (int, RomanToken[]) FigureToken(int evaluatingArabic)
+        private RomanToken[] FigureTokenSequence(int evaluatingArabic)
         {
 
             var unitPrependableToken = tokenList.FirstOrDefault(x => x.CanPrependUnit(evaluatingArabic));
             if (unitPrependableToken != null)
             {
-                var result = new RomanToken[] { RomanToken.I, unitPrependableToken };
-                return (result.Last().Arabic - result.First().Arabic, result);
+                return new RomanToken[] { RomanToken.I, unitPrependableToken };
             }
             var romanToken = tokenList.First(x => x.Arabic <= evaluatingArabic);
-            return (romanToken.Arabic, new RomanToken[] { romanToken });
+            return new RomanToken[] { romanToken };
         }
 
     }

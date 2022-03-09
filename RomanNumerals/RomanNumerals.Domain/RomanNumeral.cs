@@ -13,6 +13,10 @@ namespace RomanNumerals.Domain
         }
         public override string ToString()
         {
+            if(arabicValue == 5)
+            {
+                return "V";
+            }
             var result = string.Empty;
             for (int i = 0; i < arabicValue; i++)
             {

@@ -10,6 +10,16 @@ namespace RomanNumerals.Domain
         {
             this.arabicValue = arabicValue;
         }
-        public override string ToString() => "I";
+        public override string ToString()
+        {
+            if (arabicValue == 1)
+            { 
+                return "I"; 
+            }
+            else
+            {
+                return "II";
+            }
+        }
     }
 }

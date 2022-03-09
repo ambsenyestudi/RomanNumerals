@@ -5,49 +5,20 @@ namespace RomanNumerals.Domain
 {
     public class RomanNumeral
     {
-        private List<RomanToken> romanTokenList = new List<RomanToken>()
-        {
-            new RomanToken(10, "X"),
-            new RomanToken(5, "V"),
-            new RomanToken(1, "I")
-        };
+        private List<RomanToken> romanTokenList = new List<RomanToken>();
 
-        private int arabicValue;
+        public int Arabic { get; }
 
-        public RomanNumeral(int arabicValue)
+        public RomanNumeral(int arabic)
         {
-            this.arabicValue = arabicValue;
+            var romanTokens = new RomanTokens();
+            romanTokenList = romanTokens.ToRomanTokenList(arabic);
+            Arabic = arabic;
         }
-        public override string ToString() => 
-            FigureRomanTokens();
-
-        private string FigureRomanTokens()
+        public override string ToString()
         {
-            var result = string.Empty;
-
-            var evaluationgArabic = arabicValue;
-            while (evaluationgArabic > 0)
-            {
-                var (arabicNumeral, romanToken) = FigureToken(evaluationgArabic);
-                result += romanToken;
-                evaluationgArabic -= arabicNumeral;
-            }
-            return result;
-        }
-
-        private (int, string) FigureToken(int evaluatingArabic)
-        {
-            
-            var unitPrependableToken = romanTokenList.FirstOrDefault(x => x.IsUnitPrepended(evaluatingArabic));
-            if(unitPrependableToken != null)
-            {
-                var prependeList = unitPrependableToken.PrependUnit().Select(x=>x.ToString());
-                var result = string.Join("", prependeList);
-                return (unitPrependableToken.Arabic - 1, result);
-            }
-            var romanToken = romanTokenList.First(x => x.Arabic <= evaluatingArabic);
-            return (romanToken.Arabic, romanToken.ToString());
-        }
-                    
+            var romantTokenValues = romanTokenList.Select(x => x.ToString());
+            return string.Join("", romantTokenValues);
+        }        
     }
 }

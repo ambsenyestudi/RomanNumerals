@@ -3,22 +3,19 @@
     public class RomanToken
     {
         public static RomanToken I = new RomanToken(1, "I");
+        public static RomanToken V = new RomanToken(5, "V");
+        public static RomanToken X = new RomanToken(10, "X");
         private readonly string romanToken;
         public int Arabic { get; }
 
-        public RomanToken(int arabic, string romanToken)
+        private RomanToken(int arabic, string romanToken)
         {
             Arabic = arabic;
             this.romanToken = romanToken;
         }
         public override string ToString() => romanToken;
 
-        public bool IsUnitPrepended(int evaluatingArabic) =>
-            evaluatingArabic > 3 &&
-            Arabic - evaluatingArabic == 1;
-
-        public RomanToken[] PrependUnit() =>
-            new RomanToken[] { I, this };
-
+        public bool CanPrependUnit(int evaluatingArabic) =>
+            Arabic - evaluatingArabic == I.Arabic;
     }
 }

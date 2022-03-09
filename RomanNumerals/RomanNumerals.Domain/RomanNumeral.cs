@@ -5,6 +5,7 @@ namespace RomanNumerals.Domain
     public class RomanNumeral
     {
         const string UNIT_TOKEN = "I";
+        const string FIVE_TOKEN = "V";
         private int arabicValue;
 
         public RomanNumeral(int arabicValue)
@@ -17,7 +18,7 @@ namespace RomanNumerals.Domain
             var evaluationgArabic = arabicValue;
             if (evaluationgArabic >= 5)
             {
-                result = "V";
+                result = FIVE_TOKEN;
                 evaluationgArabic -= 5;
             }
             

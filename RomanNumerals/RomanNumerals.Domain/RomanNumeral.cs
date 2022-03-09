@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumerals.Domain
 {
     public class RomanNumeral
     {
-        private Dictionary<int, string> romanTokensDictionary = new Dictionary<int, string>
+        private List<RomanToken> romanTokenList = new List<RomanToken>()
         {
-            [10] = "X",
-            [5] = "V",
-            [1] = "I"
+            new RomanToken(10, "X"),
+            new RomanToken(5, "V"),
+            new RomanToken(1, "I")
         };
+
         private int arabicValue;
 
         public RomanNumeral(int arabicValue)
@@ -40,19 +40,19 @@ namespace RomanNumerals.Domain
             var result = string.Empty;
             if(IsMinusOnePer(evaluatingArabic))
             {
-                result = romanTokensDictionary.Values.Last();
-                var plusOneArabic = romanTokensDictionary.Keys.First(x => x <= evaluatingArabic + 1);
-                result += romanTokensDictionary[plusOneArabic];
-                return (plusOneArabic - 1, result);
+                result = romanTokenList.Last().ToString();
+                var plusOneRomanToken = romanTokenList.First(x => x.Arabic == evaluatingArabic + 1);
+                result += plusOneRomanToken.ToString();
+                return (plusOneRomanToken.Arabic - 1, result);
             }
-            var arabicNumeral = romanTokensDictionary.Keys.First(x => x <= evaluatingArabic);
-            result += romanTokensDictionary[arabicNumeral];
-            return (arabicNumeral, result);
+            var romanToken = romanTokenList.First(x => x.Arabic <= evaluatingArabic);
+            result += romanToken.ToString();
+            return (romanToken.Arabic, result);
         }
 
         private bool IsMinusOnePer(int evaluatingArabic) => 
             evaluatingArabic > 3 &&
-            romanTokensDictionary.Keys.Any(x => x == evaluatingArabic + 1);
+            romanTokenList.Any(x => x.Arabic == evaluatingArabic + 1);
             
     }
 }

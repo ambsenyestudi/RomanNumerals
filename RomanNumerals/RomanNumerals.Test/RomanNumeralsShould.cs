@@ -1,5 +1,4 @@
 using RomanNumerals.Domain;
-using System;
 using Xunit;
 
 namespace RomanNumerals.Test

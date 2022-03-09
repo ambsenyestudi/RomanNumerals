@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanNumerals.Domain
 {
@@ -23,26 +24,28 @@ namespace RomanNumerals.Domain
         public static int ToArabic(RomanToken[] tokenSequence)
         {
             var result = 0;
-            var count = 0;
-            while(count < tokenSequence.Length)
+            var tokenList = tokenSequence.ToList();
+            while(tokenList.Any())
             {
-                if(IsLast(count, tokenSequence.Length))
+                var arabic = tokenList.First().Arabic;
+                if(tokenList.Count > 1 && TrySubstractArabic(tokenList.Take(2), out arabic))
                 {
-                    result += tokenSequence[count].Arabic;
+                    tokenList.RemoveAt(0);                    
                 }
-                else if(TrySubstractArabic(tokenSequence[count], tokenSequence[count+1], out int arabic))
-                {
-                    result += arabic;
-                }
-                else
-                {
-                    result += tokenSequence[count].Arabic;
-                }
-                count++;
+                tokenList.RemoveAt(0);
+                result += arabic;
             }
             return result;
         }
-
+        private static bool TrySubstractArabic(IEnumerable<RomanToken> tokens, out int result)
+        {
+            if(tokens.Count()>2)
+            {
+                result = 0;
+                return false;
+            }
+            return TrySubstractArabic(tokens.First(), tokens.Skip(1).Single(), out result);
+        }
         private static bool TrySubstractArabic(RomanToken smaller, RomanToken bigger, out int result)
         {
             if (smaller.Arabic < bigger.Arabic)
@@ -54,16 +57,5 @@ namespace RomanNumerals.Domain
             return false;
         }
 
-        private static bool IsSmallerThanNext(int index, RomanToken[] tokenSequence)
-        {
-            if(IsLast(index,tokenSequence.Length))
-            {
-                return false;
-            }
-            return tokenSequence[index].Arabic < tokenSequence[index + 1].Arabic;
-        }
-
-        private static bool IsLast(int index, int length) =>
-            length - index == 1;
     }
 }

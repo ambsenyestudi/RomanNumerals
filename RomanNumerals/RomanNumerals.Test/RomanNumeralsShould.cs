@@ -18,6 +18,10 @@ namespace RomanNumerals.Test
         }
         [Theory]
         [InlineData(5, "V")]
+        [InlineData(6, "VI")]
+        [InlineData(7, "VII")]
+        [InlineData(8, "VIII")]
+        [InlineData(9, "VIIII")]
         public void Have_Five_Then_Units(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);

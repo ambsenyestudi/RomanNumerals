@@ -13,12 +13,15 @@ namespace RomanNumerals.Domain
         }
         public override string ToString()
         {
-            if(arabicValue == 5)
-            {
-                return "V";
-            }
             var result = string.Empty;
-            for (int i = 0; i < arabicValue; i++)
+            var evaluationgArabic = arabicValue;
+            if (evaluationgArabic >= 5)
+            {
+                result = "V";
+                evaluationgArabic -= 5;
+            }
+            
+            for (int i = 0; i < evaluationgArabic; i++)
             {
                 result += UNIT_TOKEN;
             }

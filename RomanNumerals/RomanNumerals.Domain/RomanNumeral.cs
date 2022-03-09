@@ -23,24 +23,10 @@ namespace RomanNumerals.Domain
 
         private string FigureRomanTokens()
         {
-            if (arabicValue == 4)
-            {
-                return "IV";
-            }
-            if (arabicValue == 9)
-            {
-                return "IX";
-            }
-            
-            return FigureBiggerPrepended();
-        }
-
-        private string FigureBiggerPrepended()
-        {
             var result = string.Empty;
-            
+
             var evaluationgArabic = arabicValue;
-            while(evaluationgArabic > 0)
+            while (evaluationgArabic > 0)
             {
                 var (arabicNumeral, romanToken) = FigureToken(evaluationgArabic);
                 result += romanToken;
@@ -49,10 +35,24 @@ namespace RomanNumerals.Domain
             return result;
         }
 
-        private (int, string) FigureToken(int evaluationgArabic)
+        private (int, string) FigureToken(int evaluatingArabic)
         {
-            var arabicNumeral = romanTokensDictionary.Keys.First(x => x <= evaluationgArabic);
+            if(IsMinusOnePer(evaluatingArabic))
+            {
+                if (arabicValue == 4)
+                {
+                    return (4, "IV");
+                }
+                if (arabicValue == 9)
+                {
+                    return (9, "IX");
+                }
+            }
+            var arabicNumeral = romanTokensDictionary.Keys.First(x => x <= evaluatingArabic);
             return (arabicNumeral, romanTokensDictionary[arabicNumeral]);
         }
+
+        private bool IsMinusOnePer(int evaluatingArabic) => 
+            evaluatingArabic == 4 || evaluatingArabic == 9;
     }
 }

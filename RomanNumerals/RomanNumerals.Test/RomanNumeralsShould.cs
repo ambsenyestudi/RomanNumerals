@@ -11,7 +11,14 @@ namespace RomanNumerals.Test
         [InlineData(2, "II")]
         [InlineData(3, "III")]
         [InlineData(4, "IIII")]
-        public void HaveUnits(int arabic, string expected)
+        public void Have_Units_When_UnderFive(int arabic, string expected)
+        {
+            var sut = new RomanNumeral(arabic);
+            Assert.Equal(expected, sut.ToString());
+        }
+        [Theory]
+        [InlineData(5, "V")]
+        public void Have_Five_Then_Units(int arabic, string expected)
         {
             var sut = new RomanNumeral(arabic);
             Assert.Equal(expected, sut.ToString());

@@ -37,22 +37,22 @@ namespace RomanNumerals.Domain
 
         private (int, string) FigureToken(int evaluatingArabic)
         {
+            var result = string.Empty;
             if(IsMinusOnePer(evaluatingArabic))
             {
-                if (arabicValue == 4)
-                {
-                    return (4, "IV");
-                }
-                if (arabicValue == 9)
-                {
-                    return (9, "IX");
-                }
+                result = romanTokensDictionary.Values.Last();
+                var plusOneArabic = romanTokensDictionary.Keys.First(x => x <= evaluatingArabic + 1);
+                result += romanTokensDictionary[plusOneArabic];
+                return (plusOneArabic - 1, result);
             }
             var arabicNumeral = romanTokensDictionary.Keys.First(x => x <= evaluatingArabic);
-            return (arabicNumeral, romanTokensDictionary[arabicNumeral]);
+            result += romanTokensDictionary[arabicNumeral];
+            return (arabicNumeral, result);
         }
 
         private bool IsMinusOnePer(int evaluatingArabic) => 
-            evaluatingArabic == 4 || evaluatingArabic == 9;
+            evaluatingArabic > 3 &&
+            romanTokensDictionary.Keys.Any(x => x == evaluatingArabic + 1);
+            
     }
 }

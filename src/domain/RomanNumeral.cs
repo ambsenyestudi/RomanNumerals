@@ -6,7 +6,7 @@ public record RomanNumeral
     public RomanNumeral(int arabic)
     {
         Arabic = arabic;
-        Value = string.Empty;
+        Value = "I";
     }
 
 }

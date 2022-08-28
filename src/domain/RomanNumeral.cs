@@ -6,7 +6,10 @@ public record RomanNumeral
     public RomanNumeral(int arabic)
     {
         Arabic = arabic;
-        Value = "I";
+        if(Enum.IsDefined(typeof(RomanToken), arabic))
+        {
+            Value = ((RomanToken)arabic).ToString();
+        }
     }
 
 }

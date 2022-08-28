@@ -4,10 +4,11 @@ namespace RomanNumerals.Test;
 
 public class RomanNumeralShould
 {
-    [Fact]
-    public void Test1()
+    [Theory]
+    [InlineData(1,"I")]
+    public void Convert_When_Token(int arabic, string expected)
     {
-        var romanNumeral = new RomanNumeral(1);
-        Assert.Equal("I", romanNumeral.Value);
+        var romanNumeral = new RomanNumeral(arabic);
+        Assert.Equal(expected, romanNumeral.Value);
     }
 }

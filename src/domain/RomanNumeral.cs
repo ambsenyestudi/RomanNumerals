@@ -6,10 +6,11 @@ public record RomanNumeral
     public RomanNumeral(int arabic)
     {
         Arabic = arabic;
-        if(Enum.IsDefined(typeof(RomanToken), arabic))
+        if(!Enum.IsDefined(typeof(RomanToken), arabic))
         {
-            Value = ((RomanToken)arabic).ToString();
+            throw new ArgumentException("Invalid arabic");
         }
+        Value = ((RomanToken)arabic).ToString();
     }
 
 }

@@ -17,4 +17,9 @@ public class RomanNumeralShould
         var romanNumeral = new RomanNumeral(arabic);
         Assert.Equal(expected, romanNumeral.Value);
     }
+    [Fact]
+    public void Not_Convert_When_No_Token()
+    {
+        Assert.Throws<ArgumentException>(() => new RomanNumeral(0));
+    }
 }

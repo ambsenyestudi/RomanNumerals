@@ -1,8 +1,12 @@
 ﻿namespace RomanNumerals.Domain;
-public class RomanNumeral
+public record RomanNumeral
 {
-    public RomanNumeral()
+    public int Arabic { get; }
+    public string Value { get; }
+    public RomanNumeral(int arabic)
     {
+        Arabic = arabic;
+        Value = string.Empty;
     }
 
 }
